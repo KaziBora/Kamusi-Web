@@ -13,10 +13,10 @@ class UserController extends Controller
     /**
      * Display a listing of the users
      *
-     * @param  \App\Models\User  $model
+     * @param  \App\Models\User  $md
      * @return \Illuminate\View\View
      */
-    public function index(User $model)
+    public function index(User $md)
     {
         $users = User::latest()->paginate(5);
         return view('users.index', compact('users'))->with('i', (request()->input('page', 1) - 1) * 20);
@@ -35,39 +35,28 @@ class UserController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request  $rq
      * @return \Illuminate\Http\Response
      */
     public function store(Request $rq)
     {
-        User::create($rq->all());
-        //return redirect('/users');
+        //User::create($rq->all());
+
+        User::create([
+            'first_name' => $rq->get('first_name'),
+            'last_name' => $rq->get('last_name'),
+            'dobirth' => $rq->get('dobirth'),
+            'gender' => $rq->get('gender'),
+            'about' => $rq->get('about'),
+            'town' => $rq->get('town'),
+            'country' => $rq->get('country'),
+            'email' => $rq->get('email'),
+            'password' => Hash::make(
+                $rq->get('password')),
+        ]);
         return redirect()->route('users.index')->with('success', 'User created successfully.');
     }
     
-    public function storex(Request $request)
-    {
-        /*$request->validate([
-            'name' => 'required',
-            'country' => 'required',
-            'town' => 'required',
-            //'dobirth' => '01/01/2021',
-            //'gender' => 0,
-            //'title' => 'Admin',
-            //'bio' => 'Happy to help',
-            'status' => 1,
-            //'mobile' => '+2547-',
-            'email' => 'required',
-            'password' => 'required',
-        ]);*/
-
-        User::create($request->all());
-
-        return redirect()->route('users.index')->with('success', 'User created successfully.');
-        //$u = new User();
-        //return $this->update($rq, $u);
-    }
-
     /**
      * Show the form for editing the profile.
      *
@@ -91,16 +80,16 @@ class UserController extends Controller
     /**
      * Update the profile
      *
-     * @param  \App\Http\Requests\UserRequest  $request
+     * @param  \App\Http\Requests\UserRequest  $rq
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(UserRequest $request)
+    public function update(UserRequest $rq)
     {
         if (auth()->user()->id == 1) {
             return back()->withErrors(['not_allow_profile' => __('You are not allowed to change data for a default user.')]);
         }
 
-        auth()->user()->update($request->all());
+        auth()->user()->update($rq->all());
 
         return back()->withStatus(__('Profile successfully updated.'));
     }
@@ -108,16 +97,16 @@ class UserController extends Controller
     /**
      * Change the password
      *
-     * @param  \App\Http\Requests\PasswordRequest  $request
+     * @param  \App\Http\Requests\PasswordRequest  $rq
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function password(PasswordRequest $request)
+    public function password(PasswordRequest $rq)
     {
         if (auth()->user()->id == 1) {
             return back()->withErrors(['not_allow_password' => __('You are not allowed to change the password for a default user.')]);
         }
 
-        auth()->user()->update(['password' => Hash::make($request->get('password'))]);
+        auth()->user()->update(['password' => Hash::make($rq->get('password'))]);
 
         return back()->withPasswordStatus(__('Password successfully updated.'));
     }

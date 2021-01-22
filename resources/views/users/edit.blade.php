@@ -1,7 +1,7 @@
 @extends('layouts.app', ['title' => __('User Profile')])
 
 @section('content')
-    @include('users.partials.header', [
+    @include('partials.header', [
         'title' => __('Hello') . ' '. auth()->user()->name,
         //'description' => __('Please feel most welcome to your profile page'),
         //'class' => 'col-lg-7'

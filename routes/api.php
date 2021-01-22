@@ -17,3 +17,9 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+//Route::post('/questions', 'ApiController@questions_fetch');
+Route::get('/words', 'App\Http\Controllers\ApiController@getWords');
+
+Route::get('/categories', 'App\Http\Controllers\ApiController@getCategories');
+Route::get('/trivia', 'App\Http\Controllers\ApiController@getTrivia');

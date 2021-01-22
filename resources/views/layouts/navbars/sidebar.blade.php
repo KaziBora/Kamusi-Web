@@ -83,11 +83,64 @@
                         <i class="ni ni-tv-2 text-primary"></i> {{ __('Dashboard') }}
                     </a>
                 </li>
+                
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('maneno') }}">
-                      <i class="ni ni-bullet-list-67 text-default"></i>
-                      <span class="nav-link-text">Maneno</span>
+                    <a class="nav-link active" href="#navbar-examples" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-examples">
+                      <i class="ni ni-planet text-blue"></i>
+                        <span class="nav-link-text" style="color: #f4645f;">{{ __('Kamusi Data') }}</span>
                     </a>
+
+                    <div class="collapse show" id="navbar-examples">
+                        <ul class="nav nav-sm flex-column">
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('words.index') }}">
+                                    {{ __('Words') }}
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('proverbs.index') }}">
+                                    {{ __('Proverbs') }}
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('sayings.index') }}">
+                                    {{ __('Sayings') }}
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('idioms.index') }}">
+                                    {{ __('Idioms') }}
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link active" href="#navbar-examples" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-examples">
+                      <i class="ni ni-bullet-list-67 text-default"></i>
+                        <span class="nav-link-text" style="color: #f4645f;">{{ __('Kamusi Trivia') }}</span>
+                    </a>
+
+                    <div class="collapse show" id="navbar-examples">
+                        <ul class="nav nav-sm flex-column">
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('categories.index') }}">
+                                    {{ __('Categories') }}
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('trivia.index') }}">
+                                    {{ __('Trivia') }}
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('leaderboard') }}">
+                                    {{ __('Leaderboard') }}
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('users.index') }}">

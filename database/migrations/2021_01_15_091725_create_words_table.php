@@ -21,7 +21,6 @@ class CreateWordsTable extends Migration
             $table->string('conjugation')->default('');
             $table->integer('trivia_cart')->default(0);
             $table->integer('trivia_level')->default(0);
-            $table->integer('trivia_attempts')->default(0);
             $table->timestamp('last_attempt')->nullable();
             $table->timestamps();
         });

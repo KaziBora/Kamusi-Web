@@ -2,21 +2,23 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Word;
+use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
-class WordController extends Controller
+class CategoryController extends Controller
 {
     /**
-     * Display a listing of the words
+     * Display a listing of the categories
      *
-     * @param  \App\Models\Word  $model
+     * @param  \App\Models\Category  $model
      * @return \Illuminate\View\View
      */
     public function index()
     {
-        $words = Word::simplePaginate(15);
-        return view('words.index', compact('words'));
+        //$categories = Category::paginate(10);
+        $categories = Category::select(['*', DB::raw('(SELECT COUNT(*) FROM words WHERE words.trivia_cart = categories.id) as words')])->get();
+        return view('categories.index', compact('categories'));
     }
 
     /**
@@ -26,7 +28,7 @@ class WordController extends Controller
      */
     public function create()
     {
-        return view('words.create');
+        return view('categories.create');
     }
 
     /**
@@ -37,8 +39,8 @@ class WordController extends Controller
      */
     public function store(Request $rq)
     {
-        Word::create($rq->all());
-        return redirect()->route('words.index')->with('success', 'Word created successfully.');
+        Category::create($rq->all());
+        return redirect()->route('categories.index')->with('success', 'Category created successfully.');
     }
 
     /**
@@ -48,7 +50,7 @@ class WordController extends Controller
      */
     public function edit()
     {
-        return view('words.edit');
+        return view('categories.edit');
     }
 
     /**
@@ -58,7 +60,7 @@ class WordController extends Controller
      */
     public function view()
     {
-        return view('words.view');
+        return view('categories.view');
     }
 
     /**
@@ -67,10 +69,10 @@ class WordController extends Controller
      * @param  \App\Http\Requests\Request  $rq
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(Word $md, Request $rq)
+    public function update(Category $md, Request $rq)
     {
         $md->update($rq->all());
 
-        return back()->withStatus(__('Word successfully updated.'));
+        return back()->withStatus(__('Category successfully updated.'));
     }
 }
